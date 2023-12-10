@@ -1,0 +1,56 @@
+'''Module 4: Individual Programming Assignment 1
+
+Parsing Data
+
+This assignment covers your ability to manipulate data in Python.
+'''
+
+def relationship_status(from_member, to_member, social_graph):
+    following_from = social_graph.get(from_member, {}).get("following", set())
+    following_to = social_graph.get(to_member, {}).get("following", set())
+
+    if to_member in following_from and from_member in following_to:
+        return "friends"
+    elif to_member in following_from:
+        return "follower"
+    elif from_member in following_to:
+        return "followed by"
+    else:
+        return "no relationship"
+    
+def tic_tac_toe(board):
+    size = len(board)
+
+    # Check horizontal and vertical lines
+    for i in range(size):
+        if len(set(board[i])) == 1 and board[i][0] != '':
+            return board[i][0]
+
+        if len(set(row[i] for row in board)) == 1 and board[0][i] != '':
+            return board[0][i]
+
+    # Check main diagonal
+    if len(set(board[i][i] for i in range(size))) == 1 and board[0][0] != '':
+        return board[0][0]
+
+    # Check anti-diagonal
+    if len(set(board[i][size - 1 - i] for i in range(size))) == 1 and board[0][size - 1] != '':
+        return board[0][size - 1]
+
+    return "NO WINNER"
+
+def eta(first_stop, second_stop, route_map):
+    travel_time = 0
+    current_stop = first_stop
+
+    while current_stop != second_stop:
+        leg = (current_stop, second_stop)
+
+        if leg not in route_map:
+            print("Error: Invalid route.")
+            return
+
+        travel_time += route_map[leg]["travel_time_mins"]
+        current_stop = leg[1]
+
+    return f"Estimated Time of Arrival: {travel_time} mins"
